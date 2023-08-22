@@ -2,8 +2,8 @@ const shell = require('shelljs')
 
 // CHANGE THIS
 const GIT_REPO = 'https://github.com/mits-gossau/web-components-toolbox-migrospro.git'
-const NEW_PROJECT_DIR = '/var/www/html/vm_work/'
-const NEW_PROJECT_NAME = 'web-components-toolbox-migrospro'
+const NEW_PROJECT_DIR = 'C:/Users/M0645840/github/web-components-toolbox-stage-one'
+const NEW_PROJECT_NAME = 'web-components-toolbox-webcomp-playground'
 
 // LEAVE THIS AS IT IS!
 const REF_REPO = 'https://github.com/mits-gossau/web-components-toolbox-alnatura.git'

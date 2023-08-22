@@ -644,6 +644,7 @@ export default class Navigation extends Mutation() {
           path: `${this.importMetaUrl}./nature-/nature-.css`, // apply namespace since it is specific and no fallback
           namespace: false
         }, ...styles], false)
+        
       case 'navigation-yearbooks-':
         return this.fetchCSS([{
           path: `${this.importMetaUrl}./default-/default-.css`, // apply namespace since it is specific and no fallback
@@ -665,6 +666,27 @@ export default class Navigation extends Mutation() {
           path: `${this.importMetaUrl}./yearbooks-/yearbooks-.css`, // apply namespace since it is specific and no fallback
           namespace: false
         }, ...styles], false)
+        case 'navigation-wnavi-':
+          return this.fetchCSS([{
+            path: `${this.importMetaUrl}./default-/default-.css`, // apply namespace since it is specific and no fallback
+            namespace: false,
+            replaces: [{
+              pattern: '--navigation-default-',
+              flags: 'g',
+              replacement: '--navigation-wnavi-'
+            }]
+          }, {
+            path: `${this.importMetaUrl}./wnavi-/wnavi-.css`, // apply namespace since it is specific and no fallback
+            namespace: false,
+            replaces: [{
+              pattern: '--navigation-wnavi-',
+              flags: 'g',
+              replacement: '--navigation-yearbooks-'
+            }]
+          }, {
+            path: `${this.importMetaUrl}./wnavi-/wnavi-.css`, // apply namespace since it is specific and no fallback
+            namespace: false
+          }, ...styles], false)
       default:
         return Promise.resolve()
     }

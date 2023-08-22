@@ -1,0 +1,39 @@
+
+
+  .sideimg-container {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  
+  .one-sideimg-container {
+    width: 50%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+  }
+  
+  .two-sideimg-container {
+    padding: none !important; 
+    height: 95%;
+    width: 50%;
+    align-items: flex-start;
+    justify-content: flex-start; 
+  }
+  
+  .sideimg-image {
+    max-width: 100%;
+    max-height: 100%; 
+    width: auto; 
+    height: auto;
+    object-fit: contain;
+  }
+
+  .sideimg-text{
+    text-align: right;
+  }
+  
+
+  
+  

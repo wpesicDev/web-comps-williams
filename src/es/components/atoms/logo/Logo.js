@@ -212,6 +212,11 @@ export default class Logo extends Shadow() {
           path: `${this.importMetaUrl}./partner-/partner-.css`, // apply namespace since it is specific and no fallback
           namespace: false
         }])
+      case 'logo-williamslogo-':
+        return this.fetchCSS([{
+          path: `${this.importMetaUrl}./williamslogo-/williamslogo-.css`, // apply namespace since it is specific and no fallback
+          namespace: false
+        }])
       default:
         return Promise.resolve()
     }

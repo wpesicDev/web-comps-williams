@@ -1,0 +1,22 @@
+/* Hier noch fragen stellen zu den CSS Rules wo werden diese Variabeln definiert */
+:host {
+  --menu-color: Gray;
+  --navigation-wnavi-color: var(--navigation-wnavi-color-custom, Gray);
+}
+
+@media only screen and (max-width: _max-width_) {
+  :host {
+    --navigation-wnavi-background-color-hover: transparent;
+    --navigation-wnavi-background-color-active: transparent;
+  }
+  :host > nav > ul > li:not(.open) > a-link {
+    --navigation-wnavi-color-hover: none;
+  }
+  :host > nav > ul > li > a-link, :host(.no-scroll) > nav > ul > li > a-link {
+    --navigation-wnavi-color: Gray;
+    --navigation-wnavi-color-active: none;
+  }
+  :host > nav > ul.language-switcher li, :host(:not(.no-scroll)) > nav > ul.language-switcher li, :host > nav > ul:not(.open).language-switcher li, :host(:not(.no-scroll)) > nav > ul:not(.open).language-switcher li {
+    --navigation-wnavi-color-mobile: Gray;
+  }
+}
