@@ -110,8 +110,7 @@ export default class sideimg extends Shadow() {
   renderHTML() {
     this.html = /* html */ `
     <div class="container">
-      <!-- Hier können Sie Ihr HTML für das sideimg-Element einfügen -->
-      <!-- Zum Beispiel: -->
+
       <img class="sideimg-image" src="${this.setImageURL}" alt="Bild">
     </div>
     `;
@@ -172,6 +171,7 @@ export default class sideimg extends Shadow() {
         const reader = new FileReader();
         reader.addEventListener("load", async () => {
           await localStorage.setItem("letztes-bild", reader.result);
+
           this.initImage();
 
           location.reload();
