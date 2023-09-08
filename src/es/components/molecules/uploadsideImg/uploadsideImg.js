@@ -43,6 +43,7 @@ export default class sideimg extends Shadow() {
 
   disconnectedCallback() {
     this.removeEventListener('click', this.clickEventListener);
+    this.removeEventListener()
   }
 
   shouldRenderCSS() {
@@ -171,13 +172,9 @@ export default class sideimg extends Shadow() {
         const reader = new FileReader();
         reader.addEventListener("load", async () => {
           await localStorage.setItem("letztes-bild", reader.result);
-          // Aktualisiere das Bild nach dem Hochladen
-          
           this.initImage();
 
-
-          location.reload()
-          
+          location.reload();
 
         });
         reader.readAsDataURL(input.files[0]);
@@ -186,6 +183,7 @@ export default class sideimg extends Shadow() {
   }
 
   initImage() {
+    // um das ganze immer zu reinitialisieren habe eine funktion gemacht die das ganze redefiniert.
     const imageChange = this.root.querySelector(".sideimg-image");
     imageChange.src = this.setImageURL;
   }
@@ -200,8 +198,11 @@ export default class sideimg extends Shadow() {
 
   get setImageURL() {
     if (this.recentURL) {
+      console.log("Recent localStorage URL")
       return this.recentURL;
     } else {
+
+      console.log("DefaultSource")
       return this.defaultSource;
     }
   }
