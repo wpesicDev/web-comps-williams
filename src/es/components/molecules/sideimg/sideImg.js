@@ -1,4 +1,4 @@
-import { Shadow } from '../../prototypes/Shadow.js';
+import { Shadow } from '../../prototypes/Shadow.js'
 
 export default class sideimg extends Shadow() {
 
@@ -17,8 +17,6 @@ export default class sideimg extends Shadow() {
     buttons.forEach(button => {
       button.addEventListener("click", event => this.clickEventListener(event));
     });
-
-
     // this.addEventListener('click', this.clickEventListener)
   }
 
@@ -73,11 +71,10 @@ export default class sideimg extends Shadow() {
       background: rgb(185, 3, 52);
       border: 3px solid rgb(185, 3, 52);
       color:white;
-    
-    
+
     }
     
-    
+
     Button:hover{
       background: rgb(133, 2, 37);
       border: 3px solid rgb(133, 2, 37);
@@ -88,12 +85,10 @@ export default class sideimg extends Shadow() {
 
   renderHTML() {
     this.html = /* html */ `
-
-    
     `;
   
   }
-// Button selber nioch hinzufügen ansonsten ist das ein bug noch da sie auf dem Ganzen komonenten reloaded und nicht nur auf den button selbst evt doch 2 Switch Cases???
+  //bugfix durch implementierung von Button eventlistener der alte hatte die Events immer auf den ganzen Komponenten abgehört
   clickEventListener = event => {
     var imageChange = this.root.querySelector(".sideimg-image");
 

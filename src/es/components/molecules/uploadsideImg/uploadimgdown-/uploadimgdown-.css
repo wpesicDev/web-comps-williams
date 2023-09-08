@@ -1,0 +1,37 @@
+
+.sideimg-container {
+    flex-direction: column;
+  }
+  
+  .one-sideimg-container {
+    height: 50%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  
+  }
+  
+  .two-sideimg-container {
+    padding-top: 5%;    
+    height: 50%;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: center; 
+  }
+  
+  .sideimg-image {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+  }
+  
+.sideimg-text{
+    text-align: left;
+  }
+  
+  
+  
+  
