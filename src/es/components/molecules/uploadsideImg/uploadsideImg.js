@@ -1,26 +1,47 @@
-import { Shadow } from '../../prototypes/Shadow.js'
+import { Shadow } from '../../prototypes/Shadow.js';
 
 export default class sideimg extends Shadow() {
+  constructor(options = {}, ...args) {
+    super({ hoverInit: undefined, importMetaUrl: import.meta.url, ...options }, ...args);
 
-  constructor (options = {}, ...args) {
-    // @ts-ignore
-    super({ hoverInit: undefined, importMetaUrl: import.meta.url, ...options }, ...args)
+    this.recentURL = localStorage.getItem("letztes-bild") || "";
+    
   }
 
   connectedCallback() {
+    const scrollPositionJson = localStorage.getItem('scrollPosition');
+
+    if (scrollPositionJson) {
+      const scrollPosition = JSON.parse(scrollPositionJson);
+      window.scrollTo(scrollPosition.x, scrollPosition.y);
+    }
+
     if (this.shouldRenderCSS()) this.renderCSS();
     if (this.shouldRenderHTML()) this.renderHTML();
     this.clickEventListener();
+
+    this.initImage();
+
+
     const buttons = this.root.querySelectorAll("button");
     console.log("Number of buttons found:", buttons.length);
-    // Achtung der Eventlistener muss auf die Buttons gesetzt werden ansonsten wird er auf dem ganzen Component getriggert
+    
+    // Achtung der Eventlistener muss auf die Buttons gesetzt werden, ansonsten wird er auf dem ganzen Component getriggert
     buttons.forEach(button => {
       button.addEventListener("click", event => this.clickEventListener(event));
     });
 
+    window.addEventListener('scroll', () =>{
+      const scrollPosition = {
+        x: window.scrollX,
+        y: window.scrollY
+      }
+
+      localStorage.setItem('scrollPosition', JSON.stringify(scrollPosition));
+    })
   }
 
-  disconnectedCallback(){
+  disconnectedCallback() {
     this.removeEventListener('click', this.clickEventListener);
   }
 
@@ -51,132 +72,137 @@ export default class sideimg extends Shadow() {
     }
     .two-sideimg-container {
       overflow: hidden;
-      transition: transform 0.3s ease;  
-      display: flex; 
+      transition: transform 0.3s ease;
+      display: flex;
     }
     .two-sideimg-container:hover {
-      transform: translateY(-5px); 
+      transform: translateY(-5px);
     }
-    .Button-Section{
+    .Button-Section {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       width: 100%;
-      
     }
 
-    Button{
+    Button {
       height: 100%;
       width: 10%;
       background: rgb(185, 3, 52);
       border: 3px solid rgb(185, 3, 52);
-      color:white;
-
+      color: white;
     }
-    
 
-    Button:hover{
+    Button:hover {
       background: rgb(133, 2, 37);
       border: 3px solid rgb(133, 2, 37);
     }
-    
+
+    .container{
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+    }
     `;
   }
 
   renderHTML() {
     this.html = /* html */ `
+    <div class="container">
+      <!-- Hier können Sie Ihr HTML für das sideimg-Element einfügen -->
+      <!-- Zum Beispiel: -->
+      <img class="sideimg-image" src="${this.setImageURL}" alt="Bild">
+    </div>
     `;
-  
   }
 
   clickEventListener = event => {
-    var imageChange = this.root.querySelector(".sideimg-image");
     const Fileinput = this.root.querySelectorAll("input");
     console.log("Number of input fields found:", Fileinput.length);
-
-
+    console.log("Click Listened");
     console.log("buttonListener", event?.composedPath());
     const button = event?.composedPath()[0];
     const action = button?.getAttribute("namespace") || this.getAttribute('namespace');
 
-      imageChange.src = this.defaultSource;
-      
-      switch (action) { 
-        case 'uploadside-Img-uploadimgright-':
-          console.log('case imgright');
-          this.fetchCSS([
-            {
-              path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
-            }
-          ]);
-          break;
-        case 'uploadside-Img-uploadimgleft-':
-          console.log('case imgleft');
-          this.fetchCSS([
-            {
-              path: `${this.importMetaUrl}./uploadimgleft-/uploadimgleft-.css`,            
-            }
-          ]);
-          break;
-        case 'uploadside-Img-uploadimgup-':
-          console.log('case imgup');
-          this.fetchCSS([
-            {
-              path: `${this.importMetaUrl}./uploadimgup-/uploadimgup-.css`,            
-            }
-          ]);
-          break;
-        case 'uploadside-Img-uploadimgdown-':
-          console.log('case imgdown');
-          this.fetchCSS([
-            {
-              path: `${this.importMetaUrl}./uploadimgdown-/uploadimgdown-.css`,            
-            }
-          ]);
-          break;
-          default:
-            console.log("default value")
-            this.fetchCSS([
-              {
-                path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
-              }
-            ]);
-      }
-
-      Fileinput.forEach(input => {
-        input.addEventListener("change", function() {
-          console.log(this.files);
-          const reader = new FileReader();
-  
-          reader.addEventListener("load", () => {
-            console.log(reader.result);
-            localStorage.setItem("letztes-bild", reader.result);
-          });
-  
-          reader.readAsDataURL(this.files[0]);
-          const recentURL = localStorage.getItem("letztes-bild");
-  
-          if (recentURL){
-            imageChange.src = recentURL;
+    switch (action) {
+      case 'uploadside-Img-uploadimgright-':
+        console.log('case imgright');
+        this.fetchCSS([
+          {
+            path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
           }
-        });
-  
-      });
-      
+        ]);
+        break;
+      case 'uploadside-Img-uploadimgleft-':
+        console.log('case imgleft');
+        this.fetchCSS([
+          {
+            path: `${this.importMetaUrl}./uploadimgleft-/uploadimgleft-.css`,
+          }
+        ]);
+        break;
+      case 'uploadside-Img-uploadimgup-':
+        console.log('case imgup');
+        this.fetchCSS([
+          {
+            path: `${this.importMetaUrl}./uploadimgup-/uploadimgup-.css`,
+          }
+        ]);
+        break;
+      case 'uploadside-Img-uploadimgdown-':
+        console.log('case imgdown');
+        this.fetchCSS([
+          {
+            path: `${this.importMetaUrl}./uploadimgdown-/uploadimgdown-.css`,
+          }
+        ]);
+        break;
+      default:
+        console.log("default value")
+        this.fetchCSS([
+          {
+            path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
+          }
+        ]);
+    }
 
+    Fileinput.forEach(input => {
+      input.addEventListener("change", async () => {
+        const reader = new FileReader();
+        reader.addEventListener("load", async () => {
+          await localStorage.setItem("letztes-bild", reader.result);
+          // Aktualisiere das Bild nach dem Hochladen
+          
+          this.initImage();
+
+
+          location.reload()
+          
+
+        });
+        reader.readAsDataURL(input.files[0]);
+      });
+    });
   }
 
-  
-  fileinputListener(){
-    console.log(this.root.files);
+  initImage() {
+    const imageChange = this.root.querySelector(".sideimg-image");
+    imageChange.src = this.setImageURL;
   }
 
   get defaultSource() {
     if (this.getAttribute("defaultSource")) {
-        return this.getAttribute("defaultSource");
+      return this.getAttribute("defaultSource");
     } else {
-        return "";
+      return "";
     }
-}
+  }
 
+  get setImageURL() {
+    if (this.recentURL) {
+      return this.recentURL;
+    } else {
+      return this.defaultSource;
+    }
+  }
 }
