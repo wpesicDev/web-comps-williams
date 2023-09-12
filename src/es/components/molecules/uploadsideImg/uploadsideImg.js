@@ -1,6 +1,6 @@
 import { Shadow } from '../../prototypes/Shadow.js';
 
-export default class sideimg extends Shadow() {
+export default class uploadsideimg extends Shadow() {
   constructor(options = {}, ...args) {
     super({ hoverInit: undefined, importMetaUrl: import.meta.url, ...options }, ...args);
 
@@ -27,7 +27,6 @@ export default class sideimg extends Shadow() {
     console.log("Number of buttons found:", buttons.length);
     
     // Achtung der Eventlistener muss auf die Buttons gesetzt werden, ansonsten wird er auf dem ganzen Component getriggert
-    
     buttons.forEach(button => {
       button.addEventListener("click", event => this.clickEventListener(event));
     });

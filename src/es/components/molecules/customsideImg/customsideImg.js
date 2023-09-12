@@ -1,6 +1,6 @@
 import { Shadow } from '../../prototypes/Shadow.js'
 
-export default class sideimg extends Shadow() {
+export default class customsideImg extends Shadow() {
 
   constructor (options = {}, ...args) {
     // @ts-ignore

@@ -1,12 +1,14 @@
-<m-uploadside-Img namespace="uploadside-Img-uploadimgright-" defaultSource="./sideimg/derGarten.jpg">
+<!-- Dieser Component wird verwendet um mit von einem anderm abhängigen Komponenten das Ganze Beispiel zu zeigen. DH das a-picture in kombination vom anderem verwendet wird -->
+
+<m-show-Img namespace="show-Img-showimgright-" >
     <p>Information: Die Buttonsection ist nicht im eigentlichen Component vorhanden dieser dient nur dazu alle Versionen auf einem Blick zu verschaffen.
-      Hier kann man Beliebige bilder hinzufügen man muss nur das defaultSource Attribut ändern siehe uploadsideImg.html.
+      Hier kann man Beliebige bilder hinzufügen man muss nur das defaultSource Attribut ändern siehe showImg.html.
     </p>
     <div class ="Button-Section">
-      <button namespace="uploadside-Img-uploadimgup-">Image Up</button>
-      <button namespace="uploadside-Img-uploadimgdown-">Image Down</button>
-      <button namespace="uploadside-Img-uploadimgleft-">Image Left</button>
-      <button namespace="uploadside-Img-uploadimgright-">Image Right</button>    
+      <button namespace="show-Img-showimgup-">Image Up</button>
+      <button namespace="show-Img-showimgdown-">Image Down</button>
+      <button namespace="show-Img-showimgleft-">Image Left</button>
+      <button namespace="show-Img-showimgright-">Image Right</button>    
   </div>
     <div class="sideimg-container">
         <div class="one-sideimg-container">
@@ -28,17 +30,17 @@
           </p>
         </div>
         <div class="two-sideimg-container">
-          <img class="sideimg-image" src="" alt="">
+          <a-picture namespace="picture-cover-" defaultSource="./sideimg/derGarten.jpg"></a-picture>          
         </div>
       </div>
       <input type="file" id="myFileinput">
-      <img class="ImgPreview" src="" alt="">
-</m-uploadside-Img>
+
+</m-show-Img>
 
 
 <!-- load web components for Demo Purposes Only -->
-<script class=template-script type="text/javascript" src="./uploadsideImg.js"></script>
+<script class=template-script type="text/javascript" src="./showImg.js"></script>
 <script type="text/javascript" src="../../../../../docs/es/loader.js"></script>
-<script type="text/javascript" src="../../../../../../docs/es/documenter.js?component=uploadsideImg.js"></script>
+<script type="text/javascript" src="../../../../../../docs/es/documenter.js?component=showImg.js"></script>
 
 

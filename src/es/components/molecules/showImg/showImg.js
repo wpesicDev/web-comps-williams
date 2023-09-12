@@ -1,15 +1,22 @@
 import { Shadow } from '../../prototypes/Shadow.js';
 
-export default class sideimg extends Shadow() {
+export default class showimg extends Shadow() {
   constructor(options = {}, ...args) {
     super({ hoverInit: undefined, importMetaUrl: import.meta.url, ...options }, ...args);
 
+
+
     this.recentURL = localStorage.getItem("letztes-bild") || "";
-    
+
+    // this.imageArray = JSON.parse(localStorage.getItem('srcArray')) || [];
+
   }
 
   connectedCallback() {
+
+
     const scrollPositionJson = localStorage.getItem('scrollPosition');
+
 
     if (scrollPositionJson) {
       const scrollPosition = JSON.parse(scrollPositionJson);
@@ -25,14 +32,13 @@ export default class sideimg extends Shadow() {
 
     const buttons = this.root.querySelectorAll("button");
     console.log("Number of buttons found:", buttons.length);
-    
+
     // Achtung der Eventlistener muss auf die Buttons gesetzt werden, ansonsten wird er auf dem ganzen Component getriggert
-    
     buttons.forEach(button => {
       button.addEventListener("click", event => this.clickEventListener(event));
     });
 
-    window.addEventListener('scroll', () =>{
+    window.addEventListener('scroll', () => {
       const scrollPosition = {
         x: window.scrollX,
         y: window.scrollY
@@ -105,14 +111,26 @@ export default class sideimg extends Shadow() {
       justify-content: center; 
       align-items: center;
     }
+
+    .showimg-container{
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      width: auto;
+      max-height: 100%;
+      height: auto;
+    }
     `;
   }
 
   renderHTML() {
     this.html = /* html */ `
-    <div class="container">
 
-      <img class="sideimg-image" src="${this.setImageURL}" alt="Bild">
+
+    <div class="showimg-container">
+
+      <img class="showimg" src="" />
+ 
     </div>
     `;
   }
@@ -126,35 +144,36 @@ export default class sideimg extends Shadow() {
     const action = button?.getAttribute("namespace") || this.getAttribute('namespace');
 
     switch (action) {
-      case 'uploadside-Img-uploadimgright-':
+      case 'show-Img-showimgright-':
         console.log('case imgright');
         this.fetchCSS([
           {
-            path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
+            path: `${this.importMetaUrl}./showimgright-/showimgright-.css`,
           }
         ]);
         break;
-      case 'uploadside-Img-uploadimgleft-':
+      case 'show-Img-showimgleft-':
         console.log('case imgleft');
         this.fetchCSS([
           {
-            path: `${this.importMetaUrl}./uploadimgleft-/uploadimgleft-.css`,
+            path: `${this.importMetaUrl}./showimgleft-/showimgleft-.css`,
           }
+
         ]);
         break;
-      case 'uploadside-Img-uploadimgup-':
+      case 'show-Img-showimgup-':
         console.log('case imgup');
         this.fetchCSS([
           {
-            path: `${this.importMetaUrl}./uploadimgup-/uploadimgup-.css`,
+            path: `${this.importMetaUrl}./showimgup-/showimgup-.css`,
           }
         ]);
         break;
-      case 'uploadside-Img-uploadimgdown-':
+      case 'show-Img-showimgdown-':
         console.log('case imgdown');
         this.fetchCSS([
           {
-            path: `${this.importMetaUrl}./uploadimgdown-/uploadimgdown-.css`,
+            path: `${this.importMetaUrl}./showimgdown-/showimgdown-.css`,
           }
         ]);
         break;
@@ -162,7 +181,7 @@ export default class sideimg extends Shadow() {
         console.log("default value")
         this.fetchCSS([
           {
-            path: `${this.importMetaUrl}./uploadimgright-/uploadimgright-.css`,
+            path: `${this.importMetaUrl}./showimgright-/showimgright-.css`,
           }
         ]);
     }
@@ -170,28 +189,40 @@ export default class sideimg extends Shadow() {
     Fileinput.forEach(input => {
       input.addEventListener("change", async () => {
         const reader = new FileReader();
+
         reader.addEventListener("load", async () => {
+
           await localStorage.setItem("letztes-bild", reader.result);
 
-          this.initImage();
+          try {
+            this.imageArray.push(reader.result);
+            console.log(this.imageArray);
 
-          location.reload();
+            localStorage.setItem("srcArray", JSON.stringify(this.imageArray || null));
 
+            this.initImage();
+            location.reload();
+          } catch (e) {
+            console.error("cannot get from localstorage", e);
+          }
         });
+
         reader.readAsDataURL(input.files[0]);
       });
     });
   }
 
+
   initImage() {
     // um das ganze immer zu reinitialisieren habe eine funktion gemacht die das ganze redefiniert.
-    const imageChange = this.root.querySelector(".sideimg-image");
-    imageChange.src = this.setImageURL;
+    const imageChange = this.root.querySelector("a-picture");
+    imageChange.defaultSource = this.setImageURL;
+
   }
 
   get defaultSource() {
     if (this.getAttribute("defaultSource")) {
-      return this.getAttribute("defaultSource");
+      return this.root.querySelector("a-picture").getAttribute("defaultSource");
     } else {
       return "";
     }
