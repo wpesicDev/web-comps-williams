@@ -1,6 +1,6 @@
 import { Shadow } from '../../prototypes/Shadow.js'
 
-export default class customsideImg extends Shadow() {
+export default class CustomsideImg extends Shadow() {
 
   constructor (options = {}, ...args) {
     // @ts-ignore
@@ -11,17 +11,12 @@ export default class customsideImg extends Shadow() {
     if (this.shouldRenderCSS()) this.renderCSS();
     if (this.shouldRenderHTML()) this.renderHTML();
     this.clickEventListener();
-    const buttons = this.root.querySelectorAll("button");
-    console.log("Number of buttons found:", buttons.length);
-    // Achtung der Eventlistener muss auf die Buttons gesetzt werden ansonsten wird er auf dem ganzen Component getriggert
-    buttons.forEach(button => {
-      button.addEventListener("click", event => this.clickEventListener(event));
-    });
-    // this.addEventListener('click', this.clickEventListener)
+    this.addEventListener("click", this.clickEventListener);
   }
 
   disconnectedCallback(){
-    this.removeEventListener('click', this.clickEventListener)
+    this.removeEventListener("click", this.clickEventListener);
+    console.log('disconnect');
   }
 
   shouldRenderCSS() {
@@ -90,16 +85,17 @@ export default class customsideImg extends Shadow() {
   }
   //bugfix durch implementierung von Button eventlistener der alte hatte die Events immer auf den ganzen Komponenten abgehört
   clickEventListener = event => {
+    console.log('event', event?.composedPath());
     var imageChange = this.root.querySelector(".sideimg-image");
 
     console.log("buttonListener", event?.composedPath());
-    const button = event?.composedPath()[0];
-    const action = button?.getAttribute("namespace") || this.getAttribute('namespace');
+    const button = event?.composedPath().find(button => button?.hasAttribute?.('data'));
+    const action = button?.getAttribute("data") || this.getAttribute('data');
 
     if (this.defaultSource){
       imageChange.src = this.defaultSource;
       switch (action) { 
-        case 'customside-Img-customimgright-':
+        case 'customside-img-customimgright-':
           console.log('case imgright');
           this.fetchCSS([
             {
@@ -107,7 +103,7 @@ export default class customsideImg extends Shadow() {
             }
           ]);
           break;
-        case 'customside-Img-customimgleft-':
+        case 'customside-img-customimgleft-':
           console.log('case imgleft');
           this.fetchCSS([
             {
@@ -115,7 +111,7 @@ export default class customsideImg extends Shadow() {
             }
           ]);
           break;
-        case 'customside-Img-customimgup-':
+        case 'customside-img-customimgup-':
           console.log('case imgup');
           this.fetchCSS([
             {
@@ -123,7 +119,7 @@ export default class customsideImg extends Shadow() {
             }
           ]);
           break;
-        case 'customside-Img-customimgdown-':
+        case 'customside-img-customimgdown-':
           console.log('case imgdown');
           this.fetchCSS([
             {

@@ -1,6 +1,6 @@
 import { Shadow } from '../../prototypes/Shadow.js';
 
-export default class uploadsideimg extends Shadow() {
+export default class UploadsideImg extends Shadow() {
   constructor(options = {}, ...args) {
     super({ hoverInit: undefined, importMetaUrl: import.meta.url, ...options }, ...args);
 
@@ -172,12 +172,12 @@ export default class uploadsideimg extends Shadow() {
         reader.addEventListener("load", async () => {
           await localStorage.setItem("letztes-bild", reader.result);
 
+          this.recentURL = localStorage.getItem("letztes-bild") || ""
           this.initImage();
 
-          location.reload();
+          //location.reload();
 
         });
-        reader.readAsDataURL(input.files[0]);
       });
     });
   }
