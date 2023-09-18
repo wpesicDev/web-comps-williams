@@ -399,6 +399,7 @@ export default class Button extends Hover() {
     return this.root.querySelector('#label')
   }
 
+
   get downloadIcon () {
     let iconImg
     iconImg = document.createElement('div')
